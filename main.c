@@ -5,7 +5,7 @@
 #include <pthread.h>
 #include <time.h>
 
-int numero_vueltas, numero_caballos;
+int numero_vueltas, numero_caballos, metros_meta, MetrosTotal;
 
 struct Caballo {
 	long id;
@@ -16,29 +16,28 @@ void *crear_caballo(void *d);
 int vueltas(struct Caballo *c);
 
 void *crear_caballo(void *d) {
-	clock_t inicio, fin;
-	double segundos;
-	inicio = clock();
 
-	struct Caballo *caballo;
+    struct Caballo *caballo;
 	caballo = (struct Caballo *) d;
 
-	int i;
 	caballo->demora = vueltas(caballo);
-
-	fin = clock();
-	segundos = (double)(fin - inicio) / CLOCKS_PER_SEC;
-	//printf("***El hilo del caballo %ld tardó %f segundos***\n", caballo->id, segundos);
 }
 
 int vueltas(struct Caballo *c) {
-	int i, cuenta = 0;
+	int i, cuenta = 0, PasosCaballo = 0;
+
 	for(i = 1; i < numero_vueltas+1; i++) {
 		int s = (rand() % 5)+1;
 		printf("Caballo: %ld - Vuelta: %d - Descansa %d segundos\n", c->id, i, s);
 		sleep(s);
 		cuenta += s;
+
+		while(PasosCaballo < (metros_meta*i)){
+            PasosCaballo += (rand() % 10)+1;
+		}
+
 	}
+	printf("\nPasos caballo %ld= %d", c->id, PasosCaballo);
 	return cuenta;
 }
 
@@ -54,7 +53,7 @@ int main() {
         scanf("%d", &numero_caballos);
 	}
 
-	printf("Ingresa el numero de vueltas (entre 1 y 4): ");
+	printf("Ingresa el número de vueltas (entre 1 y 4): ");
 	scanf("%d", &numero_vueltas);
 
 	while(numero_vueltas < 1 || numero_vueltas > 4){
@@ -62,14 +61,25 @@ int main() {
         scanf("%d \n", &numero_vueltas);
 	}
 
-	printf("*********************\n");
+	printf("\nIngresa el número de metros de la pista (30, 40, 50 y 60)\n");
+	printf("Debe ingresar uno de los valores entre paréntesis: ");
+	scanf("%d", &metros_meta);
+
+	while(metros_meta != 30 && metros_meta != 40 && metros_meta != 50 && metros_meta != 60){
+        printf("Debe ingresar uno de los siguientes valores (30, 40, 50, 60): ");
+        scanf("%d", &metros_meta);
+	}
+
+	printf("\n*********************\n");
 	printf("Número de caballos: %d \n", numero_caballos);
 	printf("Número de vueltas: %d \n", numero_vueltas);
-	printf("*********************\n");
+	printf("Metros pista: %d \n", metros_meta);
+	printf("*********************\n\n");
 
 	pthread_t hilos[numero_caballos];
 	struct Caballo caballos[numero_caballos];
 	long c, d;
+
 	for(c = 0; c < numero_caballos; c++) {
 		caballos[c].id = c+1;
 		pthread_create(&hilos[c], NULL, crear_caballo, (void *) &caballos[c]);
@@ -91,13 +101,15 @@ int main() {
 			}
 		}
 	}
-
+    printf("\n\n");
 	for(y = 0; y < numero_caballos; y++) {
 		printf("El caballo %ld llegó en el puesto %d \n", caballos[y].id, y+1);
 	}
 
+	printf("\n*****************************\n");
+	printf("GRACIAS POR PARTICIPAR!!!!!\n");
+	printf("*****************************\n\n");
+
 	pthread_exit(NULL);
 	return 0;
 }
-
-
