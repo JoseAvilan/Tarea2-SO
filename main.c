@@ -9,10 +9,12 @@ int numero_vueltas, numero_caballos, metros_meta, MetrosTotal;
 
 struct Caballo {
 	long id;
-	int demora;
+	char nombre;
+	int pos;
+	int carril;
 } Caballo;
 
-void *crear_caballo(void *d);
+/*void *crear_caballo(void *d);
 int vueltas(struct Caballo *c);
 
 void *crear_caballo(void *d) {
@@ -39,10 +41,20 @@ int vueltas(struct Caballo *c) {
 	}
 	printf("\nPasos caballo %ld= %d", c->id, PasosCaballo);
 	return cuenta;
+}*/
+
+int funcionCab(Caballo *caba){
+  int x=caba->pos,y=caba->carril;		    //para posicionamiento de pantalla
+  mvprintw(y,x," %c",caba->id);//posiciona e imprime el competidor h
+  refresh();												//refresca los cambion en la pantalla
+  usleep(100000/10);								//duerme por 1/4 de segundo
+  if((rand() % 2)) x++;		    		//avanza una posicion con probabilidad 0.5
+  return x;
 }
 
 int main() {
-	srand(time(NULL));
+	Caballo cab1, cab2, cab3, cab4, cab5, cab6, cab7;
+
 	printf("CARRERA DE CABALLOS\n");
 
     printf("Ingresa el número de caballos (entre 2 y 7): ");
@@ -75,6 +87,57 @@ int main() {
 	printf("Número de vueltas: %d \n", numero_vueltas);
 	printf("Metros pista: %d \n", metros_meta);
 	printf("*********************\n\n");
+
+    for(int i = 1; i<numero_caballos; i++){
+        if(i == 1 ){
+            cab1.id=1
+            cab1.carril=1;
+            cab1.caballo='A';
+            cab1.pos=1;
+        }else if(i == 2 ){
+            cab2.id=2
+            cab2.carril=3;
+            cab2.caballo='B';
+            cab2.pos=1;
+        }else if(i == 3 ){
+            cab3.id=3
+            cab3.carril=5;
+            cab3.caballo='C';
+            cab3.pos=1;
+        }else if(i == 4 ){
+            cab4.id=4
+            cab4.carril=7;
+            cab4.caballo='D';
+            cab4.pos=1;
+        }else if(i == 5 ){
+            cab5.id=5
+            cab5.carril=9;
+            cab5.caballo='E';
+            cab5.pos=1;
+        }else if(i == 6 ){
+            cab6.id=6
+            cab6.carril=11;
+            cab6.caballo='F';
+            cab6.pos=1;
+        }else if(i == 7 ){
+            cab7.id=7
+            cab7.carril=13;
+            cab7.caballo='G';
+            cab7.pos=1;
+        }
+    }
+
+    for(int i = 1; i<numero_vueltas + 1; i++){
+
+        while (x<metros_meta && cab1.pos<metros_meta && cab2.pos<metros_meta ){
+
+
+
+            cab1.pos=funcionCab(&cab1);
+            cab2.pos=funcionCab(&cab2);
+        }
+
+    }
 
 	pthread_t hilos[numero_caballos];
 	struct Caballo caballos[numero_caballos];
