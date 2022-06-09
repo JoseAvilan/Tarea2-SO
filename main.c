@@ -3,6 +3,7 @@
 #include <string.h>
 #include <unistd.h>
 #include <pthread.h>
+#include<ncurses.h> 						//bibliotecas manejo de pantalla
 #include <time.h>
 
 int numero_vueltas, numero_caballos, metros_meta, MetrosTotal;
@@ -64,6 +65,7 @@ int main() {
 	srand(time(NULL));						//inicializa semilla de la funcion random
 
 	printf("CARRERA DE CABALLOS\n");
+
 
     printf("Ingresa el número de caballos (entre 2 y 7): ");
     scanf("%d", &numero_caballos);
