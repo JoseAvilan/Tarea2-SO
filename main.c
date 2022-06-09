@@ -46,7 +46,7 @@ int vueltas(struct Caballo *c) {
 
 int funcionCab(Caballo *caba){
   int x=caba->pos,y=caba->carril;		    //para posicionamiento de pantalla
-  mvprintw(y,x," %c",caba->id);//posiciona e imprime el competidor h
+  mvprintw(y,x," %c",caba->nombre);//posiciona e imprime el competidor h
   refresh();												//refresca los cambion en la pantalla
   usleep(100000/10);								//duerme por 1/4 de segundo
   if((rand() % 2)) x++;		    		//avanza una posicion con probabilidad 0.5
@@ -58,11 +58,7 @@ int main() {
 
 	Caballo cab1, cab2, cab3, cab4, cab5, cab6, cab7;
 
-    initscr();										//inicializa la pantalla para ncurses
-	curs_set(0);									//elimina el cursor
-	erase();											//limpia pantalla
-	refresh();										//refresca los cambion en la pantalla
-	srand(time(NULL));						//inicializa semilla de la funcion random
+
 
 	printf("CARRERA DE CABALLOS\n");
 
@@ -98,44 +94,42 @@ int main() {
 	printf("Metros pista: %d \n", metros_meta);
 	printf("*********************\n\n");
 
-    for(int i = 1; i<numero_caballos; i++){
-        if(i == 1 ){
+    initscr();										//inicializa la pantalla para ncurses
+	curs_set(0);									//elimina el cursor
+	erase();											//limpia pantalla
+	refresh();										//refresca los cambion en la pantalla
+	srand(time(NULL));						//inicializa semilla de la funcion random
+
             cab1.id=1;
             cab1.carril=1;
             cab1.nombre='A';
             cab1.pos=1;
-        }else if(i == 2 ){
             cab2.id=2;
             cab2.carril=3;
             cab2.nombre='B';
             cab2.pos=1;
-        }else if(i == 3 ){
             cab3.id=3;
             cab3.carril=5;
             cab3.nombre='C';
             cab3.pos=1;
-        }else if(i == 4 ){
             cab4.id=4;
             cab4.carril=7;
             cab4.nombre='D';
             cab4.pos=1;
-        }else if(i == 5 ){
             cab5.id=5;
             cab5.carril=9;
             cab5.nombre='E';
             cab5.pos=1;
-        }else if(i == 6 ){
             cab6.id=6;
             cab6.carril=11;
             cab6.nombre='F';
             cab6.pos=1;
-        }else if(i == 7 ){
             cab7.id=7;
             cab7.carril=13;
             cab7.nombre='G';
             cab7.pos=1;
-        }
-    }
+
+
 
     for(int i = 1; i<numero_vueltas + 1; i++){
         while (x<metros_meta && cab1.pos<metros_meta && cab2.pos<metros_meta && cab3.pos<metros_meta
@@ -181,10 +175,14 @@ int main() {
 	for(y = 0; y < numero_caballos; y++) {
 		printf("El caballo %ld llegó en el puesto %d \n", caballos[y].id, y+1);
 	}*/
-
+    refresh();
 	printf("\n*****************************\n");
 	printf("GRACIAS POR PARTICIPAR!!!!!\n");
 	printf("*****************************\n\n");
+
+
+	getch(); 										//espera que se ingrese cualquier tecla para salir
+	endwin();										//cierra la pantalla de ncurses
 
 	pthread_exit(NULL);
 	return 0;
