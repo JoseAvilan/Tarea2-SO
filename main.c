@@ -1,9 +1,26 @@
+/*######################### Descripción del proyecto: #########################
+#   Programa en C que simula una carrera de caballos.
+#   Descipción:
+#    - Se creará un programa que simule una carrera de caballos con avance aleatorio.
+#    - Código desarrollado mediante metodología de programación modular, con el objetivo de reutilizar bibliotecas de funciones y/o métodos.
+#    - Versión: 0.1 (Prueba y demostración)
+#
+#   Autores:
+#       - José Avilán (https://github.com/JoseAvilan)
+#       - Nicolas Aburto (https://github.com/NicolasAburto)
+#       - Franco Avilés (https://github.com/FrancoAv1)
+#
+#   Licencia:
+#       - Junio 2022. Apache 2.0.
+#
+###########################################################################################################*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
 #include <pthread.h>
-#include<ncurses.h> 						//bibliotecas manejo de pantalla
+#include <ncurses.h> 						//bibliotecas manejo de pantalla
 #include <time.h>
 
 int numero_vueltas, numero_caballos, metros_meta, MetrosTotal;
@@ -63,24 +80,24 @@ int main() {
 	printf("CARRERA DE CABALLOS\n");
 
 
-    printf("Ingresa el número de caballos (entre 2 y 7): ");
+    printf("Ingresa el numero de caballos (entre 2 y 7): ");
     scanf("%d", &numero_caballos);
 
 	while(numero_caballos < 2 || numero_caballos > 7){
-        printf("Debe ser un número entre 2 y 7: ");
+        printf("Debe ser un numero entre 2 y 7: ");
         scanf("%d", &numero_caballos);
 	}
 
-	printf("Ingresa el número de vueltas (entre 1 y 4): ");
+	printf("Ingresa el numero de vueltas (entre 1 y 4): ");
 	scanf("%d", &numero_vueltas);
 
 	while(numero_vueltas < 1 || numero_vueltas > 4){
-        printf("Debe ser un número entre 1 y 4: ");
+        printf("Debe ser un numero entre 1 y 4: ");
         scanf("%d \n", &numero_vueltas);
 	}
 
-	printf("\nIngresa el número de metros de la pista (30, 40, 50 y 60)\n");
-	printf("Debe ingresar uno de los valores entre paréntesis: ");
+	printf("\nIngresa el numero de metros de la pista (30, 40, 50 y 60)\n");
+	printf("Debe ingresar uno de los valores entre parÃ©ntesis: ");
 	scanf("%d", &metros_meta);
 
 	while(metros_meta != 30 && metros_meta != 40 && metros_meta != 50 && metros_meta != 60){
@@ -89,8 +106,8 @@ int main() {
 	}
 
 	printf("\n*********************\n");
-	printf("Número de caballos: %d \n", numero_caballos);
-	printf("Número de vueltas: %d \n", numero_vueltas);
+	printf("Numero de caballos: %d \n", numero_caballos);
+	printf("Numero de vueltas: %d \n", numero_vueltas);
 	printf("Metros pista: %d \n", metros_meta);
 	printf("*********************\n\n");
 
@@ -99,6 +116,8 @@ int main() {
 	erase();											//limpia pantalla
 	refresh();										//refresca los cambion en la pantalla
 	srand(time(NULL));						//inicializa semilla de la funcion random
+
+
 
             cab1.id=1;
             cab1.carril=1;
@@ -134,7 +153,6 @@ int main() {
     for(int i = 1; i<numero_vueltas + 1; i++){
         while (x<metros_meta && cab1.pos<metros_meta && cab2.pos<metros_meta && cab3.pos<metros_meta
          && cab4.pos<metros_meta && cab5.pos<metros_meta && cab6.pos<metros_meta && cab7.pos<metros_meta){
-
             cab1.pos=funcionCab(&cab1);
             cab2.pos=funcionCab(&cab2);
             cab3.pos=funcionCab(&cab3);
@@ -143,7 +161,6 @@ int main() {
             cab6.pos=funcionCab(&cab6);
             cab7.pos=funcionCab(&cab7);
         }
-
     }
 
 	/*pthread_t hilos[numero_caballos];
@@ -173,12 +190,12 @@ int main() {
 	}
     printf("\n\n");
 	for(y = 0; y < numero_caballos; y++) {
-		printf("El caballo %ld llegó en el puesto %d \n", caballos[y].id, y+1);
+		printf("El caballo %ld llegÃ³ en el puesto %d \n", caballos[y].id, y+1);
 	}*/
     refresh();
-	printf("\n*****************************\n");
+	printf("\n\n");
 	printf("GRACIAS POR PARTICIPAR!!!!!\n");
-	printf("*****************************\n\n");
+	printf("\n\n");
 
 
 	getch(); 										//espera que se ingrese cualquier tecla para salir
